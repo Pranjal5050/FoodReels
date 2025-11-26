@@ -9,11 +9,13 @@ import FoodPartnerPage from '../pages/FoodPartnerPage'
 import CreateFood from '../pages/CreateFood'
 import UserProtectedWrapper from '../pages/UserProtectedWrapper'
 import SaveFood from '../pages/saveFood'
+import Start from '../pages/Start'
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
+        <Route path='/' element={<Start />}></Route>
         <Route path='/saveFood' element={
           <UserProtectedWrapper>
             <SaveFood />
