@@ -18,7 +18,7 @@ const Reels = () => {
     useEffect(() => {
         const fetchReels = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/api/food', {
+                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food`, {
                     withCredentials: true
                 });
 
@@ -54,7 +54,7 @@ const Reels = () => {
     const likeVideo = async (item) => {
     try {
         const response = await axios.post(
-            'http://localhost:3000/api/food/like',
+            `${import.meta.env.VITE_BASE_URL}/api/food/like`,
             { foodId: item.id },
             { withCredentials: true }
         );
@@ -86,7 +86,7 @@ const Reels = () => {
 const saveBookmark = async (item) => {
   try {
     const response = await axios.post(
-      'http://localhost:3000/api/food/save',
+      `${import.meta.env.VITE_BASE_URL}/api/food/save`,
       { foodId: item.id }, // use `id` instead of `_id`
       { withCredentials: true }
     );
@@ -111,43 +111,6 @@ const saveBookmark = async (item) => {
     console.error("Failed to toggle bookmark:", err);
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-//    const saveBookmark = async (items) => {
-//        try {
-//           const response = await axios.post('http://localhost:3000/api/food/save',
-//                { foodId: items._id },
-//                { withCredentials: true }
-//            )
-//
-//            const isSave = Boolean(response.data.save);
-//            // 🔥 Update reels state — THIS IS THE FIX 🔥
-//        setReels((prevReels) =>
-//            prevReels.map((r) =>
-//                r.id === items.id
-//                    ? { ...r, saveCount: isSave ? r.saveCount + 1 : r.saveCount - 1 }
-//                    : r
-//            )
-//        );
-//
-//        // 🔥 update liked UI state
-//        setBookmarkCounts((prev) => ({
-//            ...prev,
-//            [items.id]: isSave
-//        }));
-//        } catch (err) {
-//            console.error("Failed to toggle bookmark:", err)
-//        }
-//    }
 
     const openComments = (i) => {
         // simple prompt for demonstration; replace with modal as needed

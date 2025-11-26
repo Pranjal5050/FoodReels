@@ -27,11 +27,11 @@ const FoodPartnerPage = () => {
       setError(null)
       try {
         // 1) fetch partner details (we added a small endpoint at /api/foodPartner/:id)
-        const partnerResp = await axios.get(`http://localhost:3000/api/foodPartner/${partnerId}`, { withCredentials: true })
+        const partnerResp = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/foodPartner/${partnerId}`, { withCredentials: true })
         const partnerData = partnerResp?.data?.partner ?? partnerResp?.data ?? null
 
         // 2) fetch all food and filter by foodPartner id (backend GET /api/food returns foodItem array)
-        const foodsResp = await axios.get('http://localhost:3000/api/food', { withCredentials: true })
+        const foodsResp = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food`, { withCredentials: true })
         const allFoods = foodsResp?.data?.foodItem ?? foodsResp?.data ?? []
         const partnerReels = Array.isArray(allFoods) ? allFoods.filter((f) => String(f.foodPartner) === String(partnerId)) : []
 

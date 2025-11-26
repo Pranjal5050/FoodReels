@@ -17,7 +17,7 @@ const SaveFood = () => {
     // Fetch saved reels (normalize shape to match Reels component)
     async function fetchSavedReels() {
         try {
-            const res = await axios.get("http://localhost:3000/api/food/save", { withCredentials: true });
+            const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food/save`, { withCredentials: true });
             const data = res.data.savedFoods || [];
 
             // normalize: each item -> { id, src, title, description, partnerId, likeCount, saveCount }
@@ -59,7 +59,7 @@ const SaveFood = () => {
     const toggleLike = async (item) => {
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/food/like',
+                `${import.meta.env.VITE_BASE_URL}/api/food/like`,
                 { foodId: item.id },
                 { withCredentials: true }
             );
@@ -77,7 +77,7 @@ const SaveFood = () => {
     const toggleSave = async (item) => {
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/food/save',
+                `${import.meta.env.VITE_BASE_URL}/api/food/save`,
                 { foodId: item.id },
                 { withCredentials: true }
             );
@@ -103,7 +103,7 @@ const SaveFood = () => {
 
         try {
             // try calling backend comment endpoint (if available)
-            await axios.post('http://localhost:3000/api/food/comment', { foodId: item.id, text }, { withCredentials: true })
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/api/food/comment`, { foodId: item.id, text }, { withCredentials: true })
             setCommentCounts((prev) => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }))
         } catch (err) {
             // fallback: increment locally

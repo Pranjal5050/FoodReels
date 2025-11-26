@@ -27,7 +27,7 @@ const CreateFood = () => {
     formData.append('video', video);
 
     // Replace with your backend endpoint
-    const res = await axios.post("http://localhost:3000/api/food", formData, {
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/food`, formData, {
       withCredentials: true,
       headers: {
       "Content-Type": "multipart/form-data",
