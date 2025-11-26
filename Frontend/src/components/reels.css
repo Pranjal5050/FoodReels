@@ -1,0 +1,198 @@
+.reels-wrapper {
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.reel {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  scroll-snap-align: center;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reel-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* move description and Visit Store to the top-left so they don't sit behind the bottom bar */
+.reel-overlay {
+  /* place the description near the bottom-left, slightly above the fixed bottom bar */
+  position: absolute;
+  left: 18px;
+  bottom: calc(96px + env(safe-area-inset-bottom, 0px)); /* lifts overlay above the bottom bar */
+  box-sizing: border-box;
+  padding: 12px 14px;
+ 
+  color: #fff;
+  z-index: 10010; /* above the bottom bar */
+  border-radius: 10px;
+  max-width: 86%;
+}
+
+.reel-meta {
+  max-width: 68%;
+}
+
+.reel-title {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+}
+
+.reel-desc {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.reel-store-btn {
+  display: inline-block;
+  background: #ff385c;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.reel-play-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.45);
+  border: none;
+  color: #fff;
+  font-size: 34px;
+  padding: 12px 18px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.reel-sound-btn {
+  position: absolute;
+  right: 16px;
+  bottom: calc(110px + env(safe-area-inset-bottom, 0px));
+  background: rgba(0,0,0,0.45);
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10005;
+}
+
+/* expanded/fullscreen reel */
+.reel.expanded {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reel.expanded .reel-video {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.reel-close {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 10010;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* right-side action buttons (like, comment, bookmark) */
+.reel-actions {
+  position: absolute;
+  right: 16px;
+  bottom: calc(140px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  z-index: 10005; /* ensure action buttons are above the bottom bar */
+}
+
+.action-btn {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.action-count {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* bottom fixed bar */
+.reels-bottom-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
+  display: flex;
+  justify-content: space-around;
+  gap: 14px;
+  background: rgba(0,0,0,0.45);
+  padding: 10px 12px;
+  align-items: center;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
+}
+
+.reels-bottom-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* small screens tweaks */
+@media (max-width: 600px) {
+  .reel-title { font-size: 18px }
+  .reel-desc { font-size: 13px }
+  .reel-play-btn { font-size: 28px }
+}
