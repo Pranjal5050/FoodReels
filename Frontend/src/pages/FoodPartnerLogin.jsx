@@ -16,7 +16,7 @@ const FoodPartnerLogin = () => {
             email : email,
             password:password
         }
-        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/food-partner/login`, partnerLogin, {
+        const response = await axios.post('https://foodreels-yriy.onrender.com/api/auth/food-partner/login', partnerLogin, {
             withCredentials : true
         });
         if(response.status === 200){
