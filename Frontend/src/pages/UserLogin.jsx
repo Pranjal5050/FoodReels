@@ -16,7 +16,7 @@ const UserLogin = () => {
             email: email,
             password: password
         }
-        const response = await axios.post('https://foodreels-yriy.onrender.com/api/auth/user/login', userLogin, { withCredentials: true });
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/user/login`, userLogin, { withCredentials: true });
         if (response.status === 200) {
             const data = response.data
             setUserData(data.user);
