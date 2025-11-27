@@ -4,6 +4,8 @@ const express = require('express')
 const app = express();
 const cors = require('cors');
 
+app.set('trust proxy', 1); // trust first proxy
+
 app.use(cors({
     origin: ["https://sparkly-tartufo-20b593.netlify.app",
         "http://localhost:5173"

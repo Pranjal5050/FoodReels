@@ -18,7 +18,7 @@ const Reels = () => {
     useEffect(() => {
         const fetchReels = async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food`, {
+                const res = await axios.get(import.meta.env.VITE_BASE_URL + "api/food", {
                     withCredentials: true
                 });
 

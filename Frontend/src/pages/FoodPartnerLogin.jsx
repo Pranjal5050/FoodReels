@@ -23,7 +23,7 @@ const FoodPartnerLogin = () => {
             const data = response.data;
             console.log(data.token);
             setPartner(data.foodpartner);
-            localStorage.setItem('token', data.token);
+            //localStorage.setItem('token', data.token);
             navigate('/createFood');
         }
 
