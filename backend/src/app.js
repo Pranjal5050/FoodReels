@@ -5,7 +5,7 @@ const app = express();
 const cors = require('cors');
 
 app.use(cors({
-    origin: ["https://sparkly-tartufo-20b593.netlify.app/",
+    origin: ["https://sparkly-tartufo-20b593.netlify.app",
         "http://localhost:5173"
     ],   // your frontend URL
     credentials: true                  // allow cookies
