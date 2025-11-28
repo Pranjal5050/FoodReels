@@ -206,7 +206,7 @@ const Reels = () => {
             ))}
             {/* bottom fixed bar with home and bookmarks */}
             <div className="reels-bottom-bar">
-                <Link to="/" className="reels-bottom-btn" title="Home">
+                <Link to="/home" className="reels-bottom-btn" title="Home">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z" /></svg>
                 </Link>
                 <Link to="/saveFood" className="reels-bottom-btn" title="Bookmarks">

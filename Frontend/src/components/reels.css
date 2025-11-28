@@ -4,9 +4,10 @@
   width: 100vw;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scroll-snap-stop: always;       /* prevents skipping multiple reels */
-  scroll-behavior: smooth;        /* smooth scroll */
-  overscroll-behavior-y: contain; /* stops momentum fast scrolling */
+  scroll-snap-stop: always;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  font-family: "Poppins", sans-serif;
 }
 
 /* EACH REEL */
@@ -14,7 +15,7 @@
   position: relative;
   height: 100vh;
   width: 100vw;
-  scroll-snap-align: start;       /* snap exactly to one reel */
+  scroll-snap-align: start;
   background: #000;
   display: flex;
   align-items: center;
@@ -31,146 +32,87 @@
   object-fit: cover;
 }
 
-/* REEL DESCRIPTION + BUTTON */
+/* =========================
+   TEXT + VISIT STORE BUTTON
+   ========================= */
 .reel-overlay {
   position: absolute;
   left: 18px;
-  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(165px + env(safe-area-inset-bottom, 0px)); /* now ABOVE home/save bar */
   box-sizing: border-box;
-  padding: 12px 14px;
+  padding: 14px 16px;
   color: #fff;
   z-index: 10010;
-  border-radius: 10px;
-  max-width: 86%;
+  border-radius: 14px;
+  max-width: 82%;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
 }
 
-.reel-meta {
-  max-width: 68%;
+.reel-overlay h3 {
+  font-size: 23px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
-.reel-title {
-  margin: 0 0 6px 0;
-  font-size: 20px;
+.reel-overlay p {
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0.96;
+  margin-bottom: 12px;
 }
 
-.reel-desc {
-  margin: 0 0 12px 0;
-  font-size: 14px;
-  opacity: 0.95;
-}
-
-.reel-store-btn {
+.reel-overlay a {
   display: inline-block;
-  background: #ff385c;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
-  text-decoration: none;
+  background: #ff3131;
+  color: #fff;
+  padding: 8px 16px;
   font-weight: 600;
-  margin-top: 8px;
+  border-radius: 10px;
+  font-size: 15px;
 }
 
-/* PLAY BUTTON CENTER */
-.reel-play-btn {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.45);
-  border: none;
-  color: #fff;
-  font-size: 34px;
-  padding: 12px 18px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* SOUND BUTTON */
-.reel-sound-btn {
-  position: absolute;
-  right: 16px;
-  bottom: calc(110px + env(safe-area-inset-bottom, 0px));
-  background: rgba(0,0,0,0.45);
-  border: none;
-  color: #fff;
-  font-size: 18px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  z-index: 10005;
-}
-
-/* FULLSCREEN REEL */
-.reel.expanded {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reel.expanded .reel-video {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-}
-
-.reel-close {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  z-index: 10010;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  font-size: 18px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* RIGHT-SIDE ACTION BUTTONS */
+/* =========================
+   ACTION BUTTONS (Right side)
+   ========================= */
 .reel-actions {
   position: absolute;
-  right: 16px;
-  bottom: calc(140px + env(safe-area-inset-bottom, 0px));
+  right: 18px;
+  bottom: calc(145px + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  z-index: 10005;
+  gap: 24px;
+  z-index: 10020;
 }
 
 .action-btn {
-  width: 48px;
-  height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.35);
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.12); /* Light blur effect */
   border-radius: 12px;
   border: none;
   cursor: pointer;
-  position: relative;
+  transition: 0.2s ease;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .action-count {
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  color: #fff;
+  margin-top: 4px;
+  font-size: 13px;
+  text-align: center;
   font-weight: 600;
-  white-space: nowrap;
+  color: #fff;
 }
 
-/* BOTTOM NAV BAR */
+/* =========================
+   BOTTOM NAV BAR
+   ========================= */
 .reels-bottom-bar {
   position: fixed;
   left: 0;
@@ -179,26 +121,24 @@
   z-index: 9999;
   display: flex;
   justify-content: space-around;
-  gap: 14px;
-  background: rgba(0,0,0,0.45);
-  padding: 10px 12px;
-  align-items: center;
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 12px;
+  backdrop-filter: blur(10px);
 }
 
 .reels-bottom-btn {
-  width: 44px;
-  height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
   cursor: pointer;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+   ========================= */
 @media (max-width: 600px) {
-  .reel-title { font-size: 18px; }
-  .reel-desc { font-size: 13px; }
-  .reel-play-btn { font-size: 28px; }
+  .reel-overlay h3 { font-size: 21px; }
+  .reel-overlay p { font-size: 14px; }
+  .action-btn { width: 48px; height: 48px; }
 }
