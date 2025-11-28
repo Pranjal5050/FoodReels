@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/UserContext";
+import { toast } from "react-toastify";
 
 const UserLogin = () => {
     const [email, setEmail] = useState("");
@@ -11,17 +12,28 @@ const UserLogin = () => {
 
     const submitHandeler = async (e) => {
         e.preventDefault();
-        const userLogin = { email, password };
-        const response = await axios.post(
-            `${import.meta.env.VITE_BASE_URL}/api/auth/user/login`,
-            userLogin,
-            { withCredentials: true }
-        );
-        if (response.status === 200) {
+
+        try {
+            const userLogin = { email, password };
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_URL}/api/auth/user/login`,
+                userLogin,
+                { withCredentials: true }
+            );
+
             const data = response.data;
             setUserData(data.user);
             localStorage.setItem("token", data.token);
+            toast.success("Login Successful");
             navigate("/home");
+
+        } catch (error) {
+            if(error.response && error.response.data && error.response.data.message){
+                toast.error(error.response.data.message);
+            }
+            else{
+                toast.error("Login Failed. Please try again.");
+            }
         }
         setEmail("");
         setPassword("");
