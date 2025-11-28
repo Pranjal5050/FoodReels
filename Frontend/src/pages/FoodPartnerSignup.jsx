@@ -1,135 +1,148 @@
-import axios from 'axios';
-import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { AuthPratnerContext } from '../Context/PartnerContext';
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthPratnerContext } from "../Context/PartnerContext";
 
 const FoodPartnerSignup = () => {
-    const [businessname, setBusinessname] = useState("");
-    const [contactname, setContactname] = useState("");
-    const [phone, setPhone] = useState("");
-    const [address, setaddress] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const {partner, setPartner} = useContext(AuthPratnerContext);
-    const navigate = useNavigate();
+  const [businessname, setBusinessname] = useState("");
+  const [contactname, setContactname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setaddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { partner, setPartner } = useContext(AuthPratnerContext);
+  const navigate = useNavigate();
 
-    const submitHandeler = async (e) => {
-        e.preventDefault();
-        const partner = {
-            businessname: businessname,
-            contactname: contactname,
-            phone: phone,
-            email: email,
-            address: address,
-            password: password
-        }
-        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/food-partner/register`, partner, {
-            withCredentials : true
-        });
-        if(response.status === 201){
-            const data = response.data
-            setPartner(data.foodpartner);
-            localStorage.setItem('token', data.token)
-            navigate('/home');
-        }
+  const submitHandeler = async (e) => {
+    e.preventDefault();
+    const partner = {
+      businessname,
+      contactname,
+      phone,
+      email,
+      address,
+      password,
+    };
 
-        setBusinessname('');
-        setContactname('');
-        setPhone('');
-        setaddress('');
-        setEmail('');
-        setPassword('');
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/api/auth/food-partner/register`,
+      partner,
+      { withCredentials: true }
+    );
 
+    if (response.status === 201) {
+      const data = response.data;
+      setPartner(data.foodpartner);
+      localStorage.setItem("token", data.token);
+      navigate("/home");
     }
-    return (
-        <div className='w-full h-screen relative'>
-            <div className='w-full h-screen'>
-                <img className='w-full h-full object-cover brightness-50 contrast-100' src="https://images.unsplash.com/photo-1549831933-17b6be99565e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZCUyMGxhbmRpbmclMjBwYWdlJTIwM2R8ZW58MHx8MHx8fDA%3D" alt="" />
-                <div className='absolute top-1/5 w-full text-white p-5'>
-                    <h1 className='text-4xl font-bold text-center'>Create Account</h1>
-                    <div className='mt-5'>
-                        <form onSubmit={(e) => {
-                            submitHandeler(e);
-                        }}>
-                            <h1 className='text-lg font-semibold'>Business Name</h1>
-                            <input
-                                placeholder='Doe'
-                                value={businessname}
-                                onChange={(e) => {
-                                    setBusinessname(e.target.value)
-                                }}
-                                type="text"
-                                className='w-full text-2xl p-2 outline-none mt-1 bg-[#ccc] text-black py-2 rounded-md'
-                            />
 
-                            <div className='flex gap-10 mt-2'>
-                                <div>
-                                    <h1 className='text-md font-semibold'>Contact Name</h1>
-                                    <input
-                                        placeholder='Tasty tiles....'
-                                        value={contactname}
-                                        onChange={(e) => {
-                                            setContactname(e.target.value)
-                                        }}
-                                        type="text"
-                                        className='w-38 text-lg p-2 outline-none mt-1 bg-[#ccc] text-black py-2 rounded-md'
-                                    />
-                                </div>
-                                <div>
-                                    <h1 className='text-md font-semibold'>Phone</h1>
-                                    <input
-                                        placeholder='+91 914******23'
-                                        value={phone}
-                                        onChange={(e) => {
-                                            setPhone(e.target.value)
-                                        }}
-                                        type="number"
-                                        className='w-38 text-lg p-2 outline-none mt-1 bg-[#ccc] text-black py-2 rounded-md'
-                                    />
-                                </div>
-                            </div>
+    setBusinessname("");
+    setContactname("");
+    setPhone("");
+    setaddress("");
+    setEmail("");
+    setPassword("");
+  };
 
-                            <h1 className='text-lg font-semibold mt-3'>Email</h1>
-                            <input
-                                value={email}
-                                onChange={(e) => {
-                                    setEmail(e.target.value)
-                                }}
-                                type="email"
-                                placeholder='example@gmail.com'
-                                className='text-lg p-2 outline-none mt-1 bg-[#ccc] text-black w-full py-2 rounded-md'
-                            />
-                            <h1 className='text-lg font-semibold mt-3'>Password</h1>
-                            <input
-                                value={password}
-                                onChange={(e) => {
-                                    setPassword(e.target.value)
-                                }}
-                                type="password"
-                                placeholder='********'
-                                className='text-lg p-2 outline-none mt-1 bg-[#ccc] text-black w-full py-2 rounded-md'
-                            />
-                            <h1 className='text-lg font-semibold mt-3'>Address</h1>
-                            <input
-                                value={address}
-                                onChange={(e) => {
-                                    setaddress(e.target.value)
-                                }}
-                                type="text"
-                                placeholder='123 Market Streets'
-                                className='text-lg p-2 outline-none mt-1 bg-[#ccc] text-black w-full py-2 rounded-md'
-                            />
-                            <button className='w-full py-2 border-none bg-red-600 font-bold mt-5 text-2xl rounded-sm'>Create Account</button>
-                        </form>
-                    </div>
-                    <h4 className='text-md font-semibold mt-2'>Already have an Account? <Link to={'/food-partner/login'} className='text-blue-400'>Login</Link></h4>
-                </div>
-                <Link to={'/user/register'} className='w-1/2 p-3 text-lg bg-yellow-600 text-white font-bold rounded-r-full absolute bottom-3 left-4'>Register For User</Link>
+  return (
+    <div className="w-full h-screen relative font-[Poppins]">
+      <img
+        className="w-full h-full object-cover brightness-50"
+        src="https://images.unsplash.com/photo-1549831933-17b6be99565e?w=800"
+        alt=""
+      />
+
+      <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-white">
+        <i className="ri-restaurant-2-fill text-6xl mb-3 drop-shadow-xl"></i>
+        <h1 className="text-5xl font-bold tracking-wide text-center">
+          Partner Registration
+        </h1>
+
+        <form
+          onSubmit={submitHandeler}
+          className="mt-8 bg-white/10 backdrop-blur-md p-7 rounded-xl shadow-lg w-[90%] max-w-[600px]"
+        >
+          <label className="text-lg font-medium">Business Name</label>
+          <input
+            placeholder="e.g. Tasty Foods"
+            value={businessname}
+            onChange={(e) => setBusinessname(e.target.value)}
+            type="text"
+            className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+          />
+
+          <div className="flex gap-5 mt-4">
+            <div className="w-1/2">
+              <label className="text-lg font-medium">Contact Name</label>
+              <input
+                placeholder="John Doe"
+                value={contactname}
+                onChange={(e) => setContactname(e.target.value)}
+                type="text"
+                className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+              />
             </div>
-            <i className="text-white text-5xl ri-restaurant-2-fill absolute top-4 right-4"></i>
-        </div>
-    )
-}
+            <div className="w-1/2">
+              <label className="text-lg font-medium">Phone</label>
+              <input
+                placeholder="+91 9876543210"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                type="number"
+                className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+          </div>
 
-export default FoodPartnerSignup
+          <label className="text-lg font-medium mt-4 block">Email</label>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="example@gmail.com"
+            className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+          />
+
+          <label className="text-lg font-medium mt-4 block">Password</label>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="********"
+            className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+          />
+
+          <label className="text-lg font-medium mt-4 block">Address</label>
+          <input
+            value={address}
+            onChange={(e) => setaddress(e.target.value)}
+            type="text"
+            placeholder="123 Market Street"
+            className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+          />
+
+          <button className="w-full py-3 bg-orange-600 hover:bg-orange-700 transition-all mt-6 text-xl font-semibold rounded-md shadow-md">
+            Create Account
+          </button>
+        </form>
+
+        <p className="mt-4 text-lg">
+          Already have an account?{" "}
+          <Link to="/food-partner/login" className="text-blue-300 underline">
+            Login
+          </Link>
+        </p>
+
+        <Link
+          to="/user/register"
+          className="mt-6 bg-yellow-600 px-8 py-3 text-lg font-bold rounded-full shadow-md hover:bg-yellow-700 transition-all"
+        >
+          Register as Customer
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+export default FoodPartnerSignup;
