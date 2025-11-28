@@ -15,7 +15,8 @@ const FoodPartnerSignup = () => {
 
   const submitHandeler = async (e) => {
     e.preventDefault();
-    const partner = {
+
+    const partnerData = {
       businessname,
       contactname,
       phone,
@@ -26,7 +27,7 @@ const FoodPartnerSignup = () => {
 
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/api/auth/food-partner/register`,
-      partner,
+      partnerData,
       { withCredentials: true }
     );
 
@@ -46,22 +47,29 @@ const FoodPartnerSignup = () => {
   };
 
   return (
-    <div className="w-full h-screen relative font-[Poppins]">
+    <div className="w-full min-h-screen relative font-[Poppins] text-white">
+      {/* Background image */}
       <img
-        className="w-full h-full object-cover brightness-50"
+        className="w-full h-full absolute inset-0 object-cover brightness-50"
         src="https://images.unsplash.com/photo-1549831933-17b6be99565e?w=800"
         alt=""
       />
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-white">
-        <i className="ri-restaurant-2-fill text-6xl mb-3 drop-shadow-xl"></i>
-        <h1 className="text-5xl font-bold tracking-wide text-center">
+      {/* Scrollable content */}
+      <div className="relative z-10 w-full min-h-screen overflow-y-auto flex flex-col items-center px-6 py-6">
+        
+        {/* Top Icon */}
+        <i className="ri-restaurant-2-fill text-6xl mb-4 drop-shadow-2xl"></i>
+
+        {/* Heading */}
+        <h1 className="text-4xl md:text-5xl font-bold tracking-wide text-center">
           Partner Registration
         </h1>
 
+        {/* Form Card */}
         <form
           onSubmit={submitHandeler}
-          className="mt-8 bg-white/10 backdrop-blur-md p-7 rounded-xl shadow-lg w-[90%] max-w-[600px]"
+          className="mt-8 bg-white/10 backdrop-blur-md shadow-lg p-7 rounded-2xl w-full max-w-[600px]"
         >
           <label className="text-lg font-medium">Business Name</label>
           <input
@@ -69,7 +77,7 @@ const FoodPartnerSignup = () => {
             value={businessname}
             onChange={(e) => setBusinessname(e.target.value)}
             type="text"
-            className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full text-lg p-2 mt-1 rounded-md bg-white/85 text-black outline-none focus:ring-2 focus:ring-orange-500"
           />
 
           <div className="flex gap-5 mt-4">
@@ -80,7 +88,7 @@ const FoodPartnerSignup = () => {
                 value={contactname}
                 onChange={(e) => setContactname(e.target.value)}
                 type="text"
-                className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full text-lg p-2 mt-1 rounded-md bg-white/85 text-black outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
             <div className="w-1/2">
@@ -90,7 +98,7 @@ const FoodPartnerSignup = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 type="number"
-                className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full text-lg p-2 mt-1 rounded-md bg-white/85 text-black outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
           </div>
@@ -101,7 +109,7 @@ const FoodPartnerSignup = () => {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="example@gmail.com"
-            className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full text-lg p-2 mt-1 rounded-md bg-white/85 text-black outline-none focus:ring-2 focus:ring-orange-500"
           />
 
           <label className="text-lg font-medium mt-4 block">Password</label>
@@ -110,7 +118,7 @@ const FoodPartnerSignup = () => {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="********"
-            className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full text-lg p-2 mt-1 rounded-md bg-white/85 text-black outline-none focus:ring-2 focus:ring-orange-500"
           />
 
           <label className="text-lg font-medium mt-4 block">Address</label>
@@ -119,7 +127,7 @@ const FoodPartnerSignup = () => {
             onChange={(e) => setaddress(e.target.value)}
             type="text"
             placeholder="123 Market Street"
-            className="w-full text-lg p-2 mt-1 rounded-md bg-white/80 text-black outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full text-lg p-2 mt-1 rounded-md bg-white/85 text-black outline-none focus:ring-2 focus:ring-orange-500"
           />
 
           <button className="w-full py-3 bg-orange-600 hover:bg-orange-700 transition-all mt-6 text-xl font-semibold rounded-md shadow-md">
@@ -127,6 +135,7 @@ const FoodPartnerSignup = () => {
           </button>
         </form>
 
+        {/* Links */}
         <p className="mt-4 text-lg">
           Already have an account?{" "}
           <Link to="/food-partner/login" className="text-blue-300 underline">
@@ -136,9 +145,9 @@ const FoodPartnerSignup = () => {
 
         <Link
           to="/user/register"
-          className="mt-6 bg-yellow-600 px-8 py-3 text-lg font-bold rounded-full shadow-md hover:bg-yellow-700 transition-all"
+          className="mt-5 bg-yellow-600 px-7 py-3 text-lg font-bold rounded-full shadow-md hover:bg-yellow-700 transition-all"
         >
-          Register as Customer
+          Register as User
         </Link>
       </div>
     </div>

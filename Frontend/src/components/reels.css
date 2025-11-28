@@ -1,21 +1,27 @@
+/* MAIN WRAPPER – scroll one reel at a time */
 .reels-wrapper {
   height: 100vh;
   width: 100vw;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;       /* prevents skipping multiple reels */
+  scroll-behavior: smooth;        /* smooth scroll */
+  overscroll-behavior-y: contain; /* stops momentum fast scrolling */
 }
 
+/* EACH REEL */
 .reel {
   position: relative;
   height: 100vh;
   width: 100vw;
-  scroll-snap-align: center;
+  scroll-snap-align: start;       /* snap exactly to one reel */
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* VIDEO */
 .reel-video {
   position: absolute;
   top: 0;
@@ -25,17 +31,15 @@
   object-fit: cover;
 }
 
-/* move description and Visit Store to the top-left so they don't sit behind the bottom bar */
+/* REEL DESCRIPTION + BUTTON */
 .reel-overlay {
-  /* place the description near the bottom-left, slightly above the fixed bottom bar */
   position: absolute;
   left: 18px;
-  bottom: calc(96px + env(safe-area-inset-bottom, 0px)); /* lifts overlay above the bottom bar */
+  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
   padding: 12px 14px;
- 
   color: #fff;
-  z-index: 10010; /* above the bottom bar */
+  z-index: 10010;
   border-radius: 10px;
   max-width: 86%;
 }
@@ -66,6 +70,7 @@
   margin-top: 8px;
 }
 
+/* PLAY BUTTON CENTER */
 .reel-play-btn {
   position: absolute;
   left: 50%;
@@ -80,6 +85,7 @@
   cursor: pointer;
 }
 
+/* SOUND BUTTON */
 .reel-sound-btn {
   position: absolute;
   right: 16px;
@@ -94,7 +100,7 @@
   z-index: 10005;
 }
 
-/* expanded/fullscreen reel */
+/* FULLSCREEN REEL */
 .reel.expanded {
   position: fixed;
   top: 0;
@@ -129,7 +135,7 @@
   cursor: pointer;
 }
 
-/* right-side action buttons (like, comment, bookmark) */
+/* RIGHT-SIDE ACTION BUTTONS */
 .reel-actions {
   position: absolute;
   right: 16px;
@@ -137,7 +143,7 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
-  z-index: 10005; /* ensure action buttons are above the bottom bar */
+  z-index: 10005;
 }
 
 .action-btn {
@@ -164,7 +170,7 @@
   white-space: nowrap;
 }
 
-/* bottom fixed bar */
+/* BOTTOM NAV BAR */
 .reels-bottom-bar {
   position: fixed;
   left: 0;
@@ -190,9 +196,9 @@
   cursor: pointer;
 }
 
-/* small screens tweaks */
+/* MOBILE */
 @media (max-width: 600px) {
-  .reel-title { font-size: 18px }
-  .reel-desc { font-size: 13px }
-  .reel-play-btn { font-size: 28px }
+  .reel-title { font-size: 18px; }
+  .reel-desc { font-size: 13px; }
+  .reel-play-btn { font-size: 28px; }
 }

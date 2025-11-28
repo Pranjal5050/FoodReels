@@ -30,17 +30,13 @@ const Reels = () => {
                     src: item.video,
                     title: item.name,
                     description: item.description,
-                    partnerId: item.foodPartner, // keep reference to which partner uploaded this reel
-                    likeCount: item.likeCount || 0,    // 👈 ADD THIS add kiya h abhi
-                    saveCount: item.saveCount || 0    // 👈 ADD THIS add kiya h abhi
+                    partnerId: item.foodPartner,
+                    likeCount: item.likeCount || 0,
+                    saveCount: item.saveCount || 0
 
                 }))
 
                 setReels(mapped);
-
-                
-
-                //setMutedStates(mapped.map(() => true))  // default muted for autoplay
             } catch (err) {
                 console.error("Fetch reels failed:", err)
             }
@@ -52,65 +48,61 @@ const Reels = () => {
 
 
     const likeVideo = async (item) => {
-    try {
-        const response = await axios.post(
-            `${import.meta.env.VITE_BASE_URL}/api/food/like`,
-            { foodId: item.id },
-            { withCredentials: true }
-        );
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_URL}/api/food/like`,
+                { foodId: item.id },
+                { withCredentials: true }
+            );
 
-        const isLiked = Boolean(response.data.like);
+            const isLiked = Boolean(response.data.like);
 
-        // 🔥 Update reels state — THIS IS THE FIX 🔥
-        setReels((prevReels) =>
-            prevReels.map((r) =>
-                r.id === item.id
-                    ? { ...r, likeCount: isLiked ? r.likeCount + 1 : r.likeCount - 1 }
-                    : r
-            )
-        );
+            setReels((prevReels) =>
+                prevReels.map((r) =>
+                    r.id === item.id
+                        ? { ...r, likeCount: isLiked ? r.likeCount + 1 : r.likeCount - 1 }
+                        : r
+                )
+            );
 
-        // 🔥 update liked UI state
-        setLiked((prev) => ({
-            ...prev,
-            [item.id]: isLiked
-        }));
+            setLiked((prev) => ({
+                ...prev,
+                [item.id]: isLiked
+            }));
 
-    } catch (err) {
-        console.error("Failed to toggle like:", err);
-    }
-};
+        } catch (err) {
+            console.error("Failed to toggle like:", err);
+        }
+    };
 
 
 
-const saveBookmark = async (item) => {
-  try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/api/food/save`,
-      { foodId: item.id }, // use `id` instead of `_id`
-      { withCredentials: true }
-    );
+    const saveBookmark = async (item) => {
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_URL}/api/food/save`,
+                { foodId: item.id },
+                { withCredentials: true }
+            );
 
-    const isSave = Boolean(response.data.save);
+            const isSave = Boolean(response.data.save);
 
-    // Update reels array for UI count
-    setReels(prevReels =>
-      prevReels.map(r =>
-        r.id === item.id
-          ? { ...r, saveCount: isSave ? r.saveCount + 1 : r.saveCount - 1 }
-          : r
-      )
-    );
+            setReels(prevReels =>
+                prevReels.map(r =>
+                    r.id === item.id
+                        ? { ...r, saveCount: isSave ? r.saveCount + 1 : r.saveCount - 1 }
+                        : r
+                )
+            );
 
-    // Update bookmarked UI
-    setBookmarked(prev => ({
-      ...prev,
-      [item.id]: isSave
-    }));
-  } catch (err) {
-    console.error("Failed to toggle bookmark:", err);
-  }
-};
+            setBookmarked(prev => ({
+                ...prev,
+                [item.id]: isSave
+            }));
+        } catch (err) {
+            console.error("Failed to toggle bookmark:", err);
+        }
+    };
 
     const openComments = (i) => {
         // simple prompt for demonstration; replace with modal as needed
