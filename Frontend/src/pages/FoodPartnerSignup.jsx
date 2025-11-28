@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthPratnerContext } from "../Context/PartnerContext";
+import { toast } from "react-toastify";
 
 const FoodPartnerSignup = () => {
   const [businessname, setBusinessname] = useState("");
@@ -15,8 +16,8 @@ const FoodPartnerSignup = () => {
 
   const submitHandeler = async (e) => {
     e.preventDefault();
-
-    const partnerData = {
+    try {
+      const partnerData = {
       businessname,
       contactname,
       phone,
@@ -31,11 +32,17 @@ const FoodPartnerSignup = () => {
       { withCredentials: true }
     );
 
-    if (response.status === 201) {
       const data = response.data;
       setPartner(data.foodpartner);
       localStorage.setItem("token", data.token);
+      toast.success("Registration Successful");
       navigate("/home");
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Registration Failed. Please try again.");
+      }
     }
 
     setBusinessname("");

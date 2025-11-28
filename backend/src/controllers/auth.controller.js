@@ -49,7 +49,7 @@ async function loginuser(req, res) {
     const user = await userModel.findOne({ email })
 
     if (!user) {
-        return res.status(400).json({ massege: "User Not found" })
+        return res.status(400).json({ massege: "Email and password incorrect" })
     }
 
     const verifyPassword = await bcrypt.compare(password, user.password);

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "remixicon/fonts/remixicon.css";
 import axios from "axios";
 import { AuthContext } from "../Context/UserContext";
+import { toast } from "react-toastify";
 
 const UserSignup = () => {
   const [firstname, setfirstname] = useState("");
@@ -15,7 +16,8 @@ const UserSignup = () => {
 
   const submitHandeler = async (e) => {
     e.preventDefault();
-    const userData = {
+    try {
+      const userData = {
       fullname: { firstname, lastname },
       email,
       password,
@@ -24,12 +26,19 @@ const UserSignup = () => {
       `${import.meta.env.VITE_BASE_URL}/api/auth/user/register`,
       userData
     );
-    if (response.status === 201) {
       const data = response.data;
       setUserData(data.user);
       localStorage.setItem("token", data.token);
+      toast.success("Registration Successful");
       navigate("/home");
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Registration Failed. Please try again.");
+      }
     }
+
     setfirstname("");
     setLastname("");
     setEmail("");

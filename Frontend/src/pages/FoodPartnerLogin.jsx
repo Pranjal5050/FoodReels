@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthPratnerContext } from "../Context/PartnerContext";
+import { toast } from "react-toastify";
 
 const FoodPartnerLogin = () => {
   const [email, setEmail] = useState("");
@@ -11,17 +12,24 @@ const FoodPartnerLogin = () => {
 
   const submitHandeler = async (e) => {
     e.preventDefault();
-    const partnerLogin = { email, password };
-    const response = await axios.post(
-      "https://foodreels-yriy.onrender.com/api/auth/food-partner/login",
-      partnerLogin,
-      { withCredentials: true }
-    );
-    if (response.status === 200) {
+    try {
+      const partnerLogin = { email, password };
+      const response = await axios.post(
+        "https://foodreels-yriy.onrender.com/api/auth/food-partner/login",
+        partnerLogin,
+        { withCredentials: true }
+      );
       const data = response.data;
       setPartner(data.foodpartner);
       localStorage.setItem("token", data.token);
+      toast.success("Login Successful");
       navigate("/createFood");
+    } catch (error) {
+      if(error.response && error.response.data && error.response.data.message){
+        toast.error(error.response.data.message);
+      } else{
+        toast.error("Login Failed. Please try again.");
+      }
     }
     setEmail("");
     setPassword("");
