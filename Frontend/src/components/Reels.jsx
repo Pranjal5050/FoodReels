@@ -27,12 +27,12 @@ const Reels = () => {
           likeCount: item.likeCount || 0,
           saveCount: item.saveCount || 0,
         }));
-
         setReels(mapped);
       } catch (err) {
         console.error("Fetch reels failed:", err);
       }
     };
+
     fetchReels();
   }, []);
 
@@ -91,8 +91,10 @@ const Reels = () => {
     }
   };
 
+  // 🔥 Fix: Only one reel plays even with fast scroll
   useEffect(() => {
     if (reels.length === 0) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -100,7 +102,7 @@ const Reels = () => {
           const video = videoRefs.current[index];
           if (!video) return;
 
-          if (entry.isIntersecting) {
+          if (entry.intersectionRatio >= 0.8) {
             videoRefs.current.forEach((v, idx) => idx !== index && v && v.pause());
             video.currentTime = 0;
             video.play().catch(() => {});
@@ -109,7 +111,7 @@ const Reels = () => {
           }
         });
       },
-      { threshold: 0.7 }
+      { threshold: 0.8 } // 👈 80% visible -> active video
     );
 
     document.querySelectorAll(".reel").forEach((el) => observer.observe(el));
@@ -120,7 +122,7 @@ const Reels = () => {
     <div className="h-screen w-screen overflow-y-scroll scroll-smooth snap-y snap-mandatory">
       {reels.map((r, i) => (
         <div
-          className="reel h-screen w-screen snap-start relative flex items-center justify-center bg-black"
+          className="reel h-screen w-screen snap-start snap-always relative flex items-center justify-center bg-black"
           key={r.id}
           data-index={i}
         >
@@ -214,11 +216,11 @@ const Reels = () => {
 
       {/* Bottom Nav */}
       <div className="fixed bottom-0 left-0 w-full bg-black/50 backdrop-blur-md flex justify-around items-center py-3 z-[9999]">
-        <Link to="/home" className="text-white active:scale-110">
-          🏠
+        <Link to="/" className="text-white active:scale-110">
+          <i className="ri-home-2-fill"></i>
         </Link>
         <Link to="/saveFood" className="text-white active:scale-110">
-          🔖
+          <i className="ri-bookmark-fill"></i>
         </Link>
       </div>
     </div>
